@@ -1,48 +1,61 @@
-# web-cam-withgui (Webcam Pro – Advanced Capture)
+Maths-PuzzelUltra
 
-A desktop webcam application with a modern Tkinter GUI and an OpenCV capture pipeline. It supports multi-camera selection, live filters, optional face tracking overlays, snapshots, and video recording.
+Maths-PuzzelUltra is an arcade-style math puzzle game built with Pygame. Solve generated problems under different modes, build combo multipliers, fill a power gauge (time-slow), and reveal a picture puzzle piece-by-piece as you answer correctly.
 
-Repo contains:
-- `main.py` (Tkinter GUI application) :contentReference[oaicite:0]{index=0}
-- `camera.py` (OpenCV capture/processing/recording backend running in a background thread) :contentReference[oaicite:1]{index=1}
+Features
 
----
+4 game modes
 
-## Features
+Classic (60s), Blitz (30s + bonus time on correct), Zen (effectively untimed), Daily Challenge (45s seeded by date).
 
-- **Live preview** rendered into a resizable Tkinter canvas :contentReference[oaicite:2]{index=2}
-- **Camera discovery** (index scan) and **device switching** from the GUI :contentReference[oaicite:3]{index=3}
-- **Filters**:
-  - Normal
-  - Grayscale
-  - Sepia
-  - Edges (Canny)
-  - Cartoon (adaptive threshold + bilateral filter)
-  - Blur (Gaussian) :contentReference[oaicite:4]{index=4}
-- **Face tracking overlay** (Haar cascade bounding boxes) :contentReference[oaicite:5]{index=5}
-- **Snapshots** saved to `./snapshots/` with timestamped filenames :contentReference[oaicite:6]{index=6}
-- **Video recording** saved to `./recordings/` as `.avi` (XVID) :contentReference[oaicite:7]{index=7}
+Procedural problem generator with mixed formats:
 
----
+Standard arithmetic by difficulty (easy / medium / hard)
 
-## Requirements
+“Solve for ?” (missing addend)
 
-- Python 3.x
-- A working webcam (or capture device)
-- Packages:
-  - `opencv-python`
-  - `Pillow`
+True/False problems (enter 1 for True, 0 for False).
 
-> Notes:
-> - The app uses OpenCV’s `VideoCapture(index)` scanning indices `0..max_search-1` (default `max_search=5`). :contentReference[oaicite:8]{index=8}  
-> - Recording uses `cv2.VideoWriter` with XVID into AVI. Some systems may require codec support (see Troubleshooting). :contentReference[oaicite:9]{index=9}
+Puzzle reveal system: each correct answer reveals one more puzzle tile; complete the puzzle to advance levels (except Zen).
 
----
+Combo + multiplier scoring
 
-## Install
+Base points: 10 * level
 
-Clone:
+Multiplier: min(3.0, 1.0 + (combo // 3) * 0.5) (resets after timeout or wrong answer).
 
-```bash
-git clone https://github.com/kai9987kai/web-cam-withgui.git
-cd web-cam-withgui
+Power gauge + time-slow
+
+Gauge fills on correct, drops on wrong; when full, press Left Shift to activate a ~5s time-slow effect.
+
+Juice / feedback
+
+Particle burst on success, screen shake on wrong answers.
+
+Sound effects (no asset files required)
+
+Procedurally generated beeps via pygame.mixer + NumPy (correct / wrong / click / powerup).
+
+UI
+
+Hover-scaling buttons + numeric-only input box with blinking cursor.
+
+Requirements
+
+Python 3.x
+
+Dependencies:
+
+pygame
+
+numpy
+
+Install:
+
+pip install pygame numpy
+
+Run
+python main.py
+
+
+The window title is set to “Math Puzzle Pro Ultra” and the main menu title renders “PUZZLE ULTRA”.
